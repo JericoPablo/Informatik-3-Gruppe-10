@@ -64,9 +64,12 @@ feature {ANY} -- Routines
 
 	add(new_value:G)
 			-- Adds new value to the treestructure
+		require
+			already_contains: not has(new_value)
 		local
 			new_node: NODE[G]
 			tmp_node: NODE[G]
+
 		do
 			if not has(new_value) then
 				create new_node.make(new_value)
@@ -103,6 +106,11 @@ feature {ANY} -- Routines
 
 	remove(value:G)
 			-- Deletes all nodes with the explizit value from the treestructure
+
+		require
+			treestructure_is_not_empty: not is_empty
+			tree_contains_value: has(value)
+
 		local
 			tmp_node: NODE[G]
 		do
@@ -132,6 +140,7 @@ feature {ANY} -- Routines
 		local
 			tmp_node: detachable NODE[G]
 			exists : BOOLEAN
+
 		do
 			exists := false
 			if not is_empty then
@@ -156,6 +165,8 @@ feature {PROBLEM, NONE} -- Subroutines
 
 	remove_node(r_node: NODE[G])
 			-- Deletes one explicit node from the treestructure
+		require
+			three_contains_value: has(r_node.get_value)
 		local
 			tmp_node: NODE[G]
 			tmp_parent: NODE[G]
@@ -216,6 +227,8 @@ feature {PROBLEM, NONE} -- Subroutines
 				r_node.set_value(tmp_value)
 				remove_node(tmp_node)
 			end
+			ensure
+				node_deleted: not has(r_node.get_value)
 		end
 
 feature -- Attach
