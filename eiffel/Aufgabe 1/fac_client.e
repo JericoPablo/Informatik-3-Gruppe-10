@@ -28,7 +28,7 @@ feature {NONE} -- Initialization // None for private
             zahl:=variable.to_integer_32
 
 
-			print("%N%NFakultaet 4%N%N")
+			print("%N%NFakultaet %N%N")
 			create fac.make (zahl)
 			sol := fac.get_Solution
 			print (sol.get_Value)

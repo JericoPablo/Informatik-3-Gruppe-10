@@ -65,7 +65,7 @@ feature {ANY} -- Routines
 	add(new_value:G)
 			-- Adds new value to the treestructure
 		require
-			already_contains: not has(new_value)
+			tree_exist: current /= void
 		local
 			new_node: NODE[G]
 			tmp_node: NODE[G]
@@ -137,6 +137,9 @@ feature {ANY} -- Routines
 
 	has(value: G): BOOLEAN
 			-- Searches treestructure for explicit value and return true if found
+		require
+		tree_exist: current /= void
+
 		local
 			tmp_node: detachable NODE[G]
 			exists : BOOLEAN
